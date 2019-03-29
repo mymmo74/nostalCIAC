@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package nostalciac.services;
+
 import java.net.URI;
 import java.util.List;
 import javax.inject.Inject;
@@ -26,37 +27,41 @@ import nostalciac.entity.Sede;
  *
  * @author tss
  */
-
-@Path("sedi")
+@Path("/sedi")
 public class SediResource {
-    
+
     // Tramite Pajara istanzio l'oggetto
     @Inject
     SedeStore store;
-    
+
     // Espongo il metodo di ricerca GET 
     // che restituisce tutti i record
     @GET
-    public List<Sede> findAll(){
+    public List<Sede> findAll() {
         return store.all();
     }
-    
+
     // Espongo il metodo di ricerca GET 
     // che restituisce per SEDE e CITTA'
     @GET
+    
     @Path("search")
     public List<Sede> search(
             @QueryParam("nome") String searchSede,
-            @QueryParam("citta") String searchCitta){
+            @QueryParam("citta") String searchCitta) {
         return store.search(searchSede, searchCitta);
     }
-    
+
     // Espongo il metodo di ricerca GET 
     // per ID
-    @GET
+    // quando cerco una singola sede restituisco non più una Sede,
+    // ma passo il controllo alla risorsa SedeResource
+    // quando passo il controllo ad una sotto risorsa non devo più esporre il metodo @GET
     @Path("{id}")
-    public Sede find(@PathParam("id") int id){
-        return store.find(id);
+    // restituisce l'oggetto SedeResource
+    public SedeResource find(@PathParam("id") int id) {
+        // restituisco una nuova istanza 
+        return new SedeResource(id, store);
     }
 
     // Espongo il metodo di salvataggio POST 
@@ -64,38 +69,13 @@ public class SediResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(Sede sede, @Context UriInfo uriInfo) {
-         Sede saved=store.create(sede);
-         URI uri=uriInfo
+        Sede saved = store.create(sede);
+        URI uri = uriInfo
                 .getAbsolutePathBuilder()
-                .path("/"+saved.getId())
+                .path("/" + saved.getId())
                 .build();
 //         return Response.ok(uri).build();
-            return Response.ok(uri).build();
+        return Response.ok(uri).build();
     }
-    
-    // Espongo il metodo di update PUT 
-    // aggiorna su DB il record indicato con id
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{id}")
-    public void update(@PathParam("id") int id,Sede sede){
-        // se id esiste nel DB faccio un aggiornamento
-        // altrimenti lo creo nuovo
-        sede.setId(id);
-        store.save(sede);
-    }
-    
-    // Espongo il metodo di update DELETE
-    // cancello il record indicato con id
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") int id){
-        store.remove(id);
-    }
-    
-    
-    
-    
-            
-    
+
 }

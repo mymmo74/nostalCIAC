@@ -24,7 +24,7 @@ import nostalciac.entity.Sede;
  *
  * @author tss
  */
-@Path("corsi")
+@Path("/corsi")
 public class CorsiResource {
 
     @Inject

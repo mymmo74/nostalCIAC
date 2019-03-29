@@ -25,9 +25,9 @@ import nostalciac.entity.Tag;
 
 /**
  *
- * @author tss
+ * @author tsst_sedi
  */
-@Path("tags")
+@Path("/tags")
 public class TagsResource {
 
     @Inject
