@@ -30,6 +30,7 @@ public class Tag implements Serializable {
     // nullable: indica che è un campo NON NULL:
     // length: indica che è uno String di 50 caratteri
     @Column(name = "id_tag", nullable = false, length = 50)
+    // questo deve essere fatto sulla/e colonna/e con Primary Key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
