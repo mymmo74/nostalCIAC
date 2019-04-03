@@ -5,11 +5,14 @@
  */
 package nostalciac.services;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.container.ResourceContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import nostalciac.business.CorsoStore;
 import nostalciac.business.SedeStore;
@@ -21,15 +24,16 @@ import nostalciac.entity.Sede;
  */
 // non deve avere annotazioni Path perchè è una sottorisorsa di SediResource
 public class SedeResource {
-    private final CorsoStore corsoStore;
-    private final Integer id;
-    private final SedeStore store;
+    @Inject
+    private  CorsoStore corsoStore;
+    
+    private  Integer id;
+    
+    @Inject
+    private  SedeStore store;
 
-    public SedeResource(CorsoStore corsoStore, SedeStore store, Integer id) {
-        this.corsoStore = corsoStore;
-        this.store = store;
-        this.id = id;
-    }
+    @Context
+    ResourceContext rc;
 
     // Espongo il metodo di ricerca GET 
     // per ID
@@ -59,7 +63,14 @@ public class SedeResource {
     
     @Path("/corsi")
     public CorsiResource getCorsi() {
-        return new CorsiResource(corsoStore, store, id);
+        CorsiResource resource=rc.getResource(CorsiResource.class);
+        resource.setSedeId(id);
+        return resource;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    
 }

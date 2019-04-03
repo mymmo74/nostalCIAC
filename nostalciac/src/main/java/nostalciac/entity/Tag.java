@@ -32,7 +32,7 @@ public class Tag implements Serializable {
     @Column(name = "id_tag", nullable = false, length = 50)
     // questo deve essere fatto sulla/e colonna/e con Primary Key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+        private int id;
 
     @Column(name = "tag")
     private String tag;

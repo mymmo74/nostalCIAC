@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import nostalciac.entity.Corso;
+import nostalciac.entity.Tag;
 
 /**
  *
@@ -41,6 +42,13 @@ public class CorsoStore {
     
     public List<Corso> findAll (){
         return em.createQuery("select e from Corso e order by e.nome", Corso.class)
+                .getResultList();
+    }
+
+    public List<Tag> findTags(Integer id) {
+        return em.createQuery(
+                "select e.tags from Corso e where e.id= :idCorso",Tag.class)
+                .setParameter("idCorso", id)
                 .getResultList();
     }
     

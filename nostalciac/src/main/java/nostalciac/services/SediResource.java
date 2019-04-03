@@ -14,12 +14,14 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import nostalciac.business.CorsoStore;
 import nostalciac.business.SedeStore;
+import nostalciac.business.TagStore;
 import nostalciac.entity.Sede;
 
 /**
@@ -33,8 +35,8 @@ public class SediResource {
     @Inject
     SedeStore store;
     
-    @Inject
-    CorsoStore corsoStore;
+    @Context
+    ResourceContext rc;
     
     // Espongo il metodo di ricerca GET 
     // che restituisce tutti i record
@@ -60,8 +62,10 @@ public class SediResource {
     @Path("{id}")
     // restituisce l'oggetto SedeResource
     public SedeResource find(@PathParam("id") int id) {
+        SedeResource resource = rc.getResource(SedeResource.class);
+        resource.setId(id);
         // restituisco una nuova istanza 
-        return new SedeResource(corsoStore,  store,id);
+        return resource;
     }
 
     // Espongo il metodo di salvataggio POST 
@@ -70,6 +74,7 @@ public class SediResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(Sede sede, @Context UriInfo uriInfo) {
         Sede saved = store.create(sede);
+        // Le buone norme dei servizi REST è di ritornare l'indirizzo della risorsa creata
         URI uri = uriInfo
                 .getAbsolutePathBuilder()
                 .path("/" + saved.getId())
