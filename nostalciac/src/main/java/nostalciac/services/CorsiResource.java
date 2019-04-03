@@ -24,18 +24,21 @@ import nostalciac.entity.Sede;
  *
  * @author tss
  */
-@Path("/corsi")
 public class CorsiResource {
+    private final CorsoStore store;
+    private final SedeStore sedeStore;
 
-    @Inject
-    CorsoStore store;
-
-    @Inject
-    SedeStore sedeStore;
-
+    private final Integer sedeId;
+    
+    public CorsiResource(CorsoStore store, SedeStore sedeStore, Integer sedeId) {
+        this.store = store;
+        this.sedeStore = sedeStore;
+        this.sedeId = sedeId;
+    }
+    
     @GET
     public List<Corso> findAll() {
-        return store.findAll();
+        return store.findBySede(sedeId);
     }
 
     @GET
@@ -48,7 +51,7 @@ public class CorsiResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(Corso c) {
-        Sede sede= sedeStore.find(c.getIdSede());
+        Sede sede= sedeStore.find(sedeId);
         c.setSede(sede);
         store.save(c);
     }

@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import nostalciac.entity.Sede;
 import nostalciac.entity.Tag;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-03-29T15:19:03")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-04-03T09:15:09")
 @StaticMetamodel(Corso.class)
 public class Corso_ { 
 

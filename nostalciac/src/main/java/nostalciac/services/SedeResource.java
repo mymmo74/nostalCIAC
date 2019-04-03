@@ -10,8 +10,8 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import nostalciac.business.CorsoStore;
 import nostalciac.business.SedeStore;
 import nostalciac.entity.Sede;
 
@@ -21,13 +21,14 @@ import nostalciac.entity.Sede;
  */
 // non deve avere annotazioni Path perchè è una sottorisorsa di SediResource
 public class SedeResource {
-
+    private final CorsoStore corsoStore;
     private final Integer id;
     private final SedeStore store;
 
-    public SedeResource(Integer id, SedeStore store) {
-        this.id = id;
+    public SedeResource(CorsoStore corsoStore, SedeStore store, Integer id) {
+        this.corsoStore = corsoStore;
         this.store = store;
+        this.id = id;
     }
 
     // Espongo il metodo di ricerca GET 
@@ -54,6 +55,11 @@ public class SedeResource {
     @DELETE
     public void delete() {
         store.remove(id);
+    }
+    
+    @Path("/corsi")
+    public CorsiResource getCorsi() {
+        return new CorsiResource(corsoStore, store, id);
     }
 
 }

@@ -9,10 +9,8 @@ import java.net.URI;
 import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
@@ -20,6 +18,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import nostalciac.business.CorsoStore;
 import nostalciac.business.SedeStore;
 import nostalciac.entity.Sede;
 
@@ -33,7 +32,10 @@ public class SediResource {
     // Tramite Pajara istanzio l'oggetto
     @Inject
     SedeStore store;
-
+    
+    @Inject
+    CorsoStore corsoStore;
+    
     // Espongo il metodo di ricerca GET 
     // che restituisce tutti i record
     @GET
@@ -41,9 +43,7 @@ public class SediResource {
         return store.all();
     }
 
-    // Espongo il metodo di ricerca GET 
-    // che restituisce per SEDE e CITTA'
-    @GET
+  
     
     @Path("search")
     public List<Sede> search(
@@ -61,7 +61,7 @@ public class SediResource {
     // restituisce l'oggetto SedeResource
     public SedeResource find(@PathParam("id") int id) {
         // restituisco una nuova istanza 
-        return new SedeResource(id, store);
+        return new SedeResource(corsoStore,  store,id);
     }
 
     // Espongo il metodo di salvataggio POST 

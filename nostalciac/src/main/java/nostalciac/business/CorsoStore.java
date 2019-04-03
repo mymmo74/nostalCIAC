@@ -33,6 +33,12 @@ public class CorsoStore {
         em.remove(id);
     }
     
+    public List<Corso> findBySede(Integer sedeId){
+        return em.createQuery("select e from Corso e where e.sede.id= :sede_id order by e.nome", Corso.class)
+                .setParameter("sede_id", sedeId)
+                .getResultList();
+    }
+    
     public List<Corso> findAll (){
         return em.createQuery("select e from Corso e order by e.nome", Corso.class)
                 .getResultList();

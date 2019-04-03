@@ -55,11 +55,7 @@ public class Corso implements Serializable {
     @Column(name = "note_corso")
     private String note;
 
-    // Cioè non persistente, non viene salvato su DB
-//    @Transient
-    private Integer idSede;
-
-    // per aggiungere un field con foreign keys
+   // per aggiungere un field con foreign keys
     //          siccome abbiamo un oggetto che ha il field mappato
     // possiamo usare l'oggetto Sede (già definito)
     // mettendo l'indicazione FetchType LAZY non carica i dati delle sedi
@@ -178,12 +174,6 @@ public class Corso implements Serializable {
         this.tags = tags;
     }
 
-    public Integer getIdSede() {
-        return idSede;
-    }
-
-    public void setIdSede(Integer idSede) {
-        this.idSede = idSede;
-    }
+   
 
 }

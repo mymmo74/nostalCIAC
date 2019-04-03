@@ -12,6 +12,7 @@ and open the template in the editor.
 .campo label:first-child{
     display: inline-block;
     width: 10%;
+    vertical-align: top;
 }
 
 /*per bordare campo in focus*/
@@ -20,7 +21,8 @@ input:focus{
 }
 
 .campo{
-    margin-top: 5px;
+    margin-top: 10px;
+    width: 55em;
 }
 
 /*mettendo tra parentesi quadre si seleziona per attributo
@@ -28,4 +30,32 @@ si chiama selettore per attributo*/
 input[type=button], input[type=submit], input[type=reset]{
     /*15em vuol dire 15 caratteri*/
     width: 15em;
+}
+
+textarea{
+    resize: none;
+    margin: 0px;
+
+}
+
+input[type="text"], textarea, select, input[type="date"]{
+    width: 20em;
+    border: solid 1px blue;
+}
+textarea{
+    height: 4em;
+}
+
+
+@media (orientation: portrait)
+{
+    .campo{
+        width: 100%;
+        text-align: center;
+    }
+    .campo label:nth-child(1){
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
 }
