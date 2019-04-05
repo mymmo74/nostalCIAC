@@ -7,6 +7,7 @@ package nostalciac.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.json.bind.annotation.JsonbDateFormat;
@@ -26,71 +27,56 @@ import javax.persistence.Table;
  * @author tss
  */
 @Entity
-@Table(name = "t_corsi")
-public class Corso implements Serializable {
-
+@Table(name = "t_esperienze")
+public class Esperienza implements Serializable{
+    
     @Id
-    @Column(name = "id_corso")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(name = "nome_corso")
+    @Column(name = "id_esperienza")
+    private Integer id;
+    
+    @Column(name = "esperienza")
     private String nome;
-
-    @Column(name = "edizione")
-    private String edizione;
-
-    @Column(name = "data_inizio")
+            
+    @Column(name = "note_esperienza")
+    private String note;
+            
+    @Column(name = "luogo")
+    private String luogo;
+            
+    @Column(name = "nazione")
+    private String stato;
+            
+    @Column(name = "dato_inizia_esperienza")
     @JsonbDateFormat("dd/MM/yyyy")
     private LocalDate inizio;
-
-    @Column(name = "data_fine")
+            
+    @Column(name = "dato_fine_esperienza")
     @JsonbDateFormat("dd/MM/yyyy")
     private LocalDate fine;
-
-    @Column(name = "note_corso")
-    private String note;
-
-   // per aggiungere un field con foreign keys
-    //          siccome abbiamo un oggetto che ha il field mappato
-    // possiamo usare l'oggetto Sede (già definito)
-    // mettendo l'indicazione FetchType LAZY non carica i dati delle sedi
-//   @ManyToOne(fetch = FetchType.LAZY)
-    @ManyToOne()
-    // Non fa comparire la sede nel JSON
-//    @JsonbTransient
-    @JoinColumn(name = "id_sede", referencedColumnName = "id_sede")
-    private Sede sede;
-
-     public Corso() {
-    }
+            
+    @ManyToOne
+    @JoinColumn(name = "id_anagrafica", referencedColumnName = "id_anagrafica")
+    private Anagrafica anagrafica;
     
     @ManyToMany()
     // serve per spiegare come è fatta la nostra tabella "t_tags_corsi"
     @JoinTable(
-            name = "t_tags_corsi",
+            name = "t_tags_esperienze",
             joinColumns
-            = @JoinColumn(name = "id_corso",
-                    referencedColumnName = "id_corso"),
+            = @JoinColumn(name = "id_esperienza",
+                    referencedColumnName = "id_esperienza"),
             inverseJoinColumns
             = @JoinColumn(name = "id_tag",
                     referencedColumnName = "id_tag")
     )
     private Set<Tag> tags = new TreeSet<>();
 
-    public Sede getSede() {
-        return sede;
-    }
-
-    public void setSede(Sede sede) {
-        this.sede = sede;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -102,12 +88,28 @@ public class Corso implements Serializable {
         this.nome = nome;
     }
 
-    public String getEdizione() {
-        return edizione;
+    public String getNote() {
+        return note;
     }
 
-    public void setEdizione(String edizione) {
-        this.edizione = edizione;
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getLuogo() {
+        return luogo;
+    }
+
+    public void setLuogo(String luogo) {
+        this.luogo = luogo;
+    }
+
+    public String getStato() {
+        return stato;
+    }
+
+    public void setStato(String stato) {
+        this.stato = stato;
     }
 
     public LocalDate getInizio() {
@@ -126,18 +128,27 @@ public class Corso implements Serializable {
         this.fine = fine;
     }
 
-    public String getNote() {
-        return note;
+    public Anagrafica getAnagrafica() {
+        return anagrafica;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setAnagrafica(Anagrafica anagrafica) {
+        this.anagrafica = anagrafica;
     }
 
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+        
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + this.id;
+        hash = 53 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -152,23 +163,19 @@ public class Corso implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Corso other = (Corso) obj;
-        return this.id == other.id;
+        final Esperienza other = (Esperienza) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "Corso{" + "id=" + id + ", nome=" + nome + ", edizione=" + edizione + ", inizio=" + inizio + ", fine=" + fine + ", note=" + note + '}';
+        return "Esperienza{" + "id=" + id + ", nome=" + nome + ", note=" + note + ", luogo=" + luogo + ", stato=" + stato + ", inizio=" + inizio + ", fine=" + fine + '}';
     }
-
-    public Set<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
-    }
-
-   
-
+    
+    
+            
+    
 }

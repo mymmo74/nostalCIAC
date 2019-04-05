@@ -19,9 +19,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import nostalciac.business.CorsoStore;
 import nostalciac.business.SedeStore;
-import nostalciac.business.TagStore;
 import nostalciac.entity.Sede;
 
 /**
@@ -46,13 +44,7 @@ public class SediResource {
     }
 
   
-    
-    @Path("search")
-    public List<Sede> search(
-            @QueryParam("nome") String searchSede,
-            @QueryParam("citta") String searchCitta) {
-        return store.search(searchSede, searchCitta);
-    }
+   
 
     // Espongo il metodo di ricerca GET 
     // per ID

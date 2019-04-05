@@ -10,50 +10,49 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import nostalciac.entity.Anagrafica;
+import nostalciac.entity.Corso;
+import nostalciac.entity.Esperienza;
 
 /**
  *
  * @author tss
  */
 @Stateless
-public class AnagraficaStore {
-    
+public class EsperienzaStore {
     @PersistenceContext
     EntityManager em;
     
-    
-        
     /**
      * *
-     * Restituisce tutte le anagrafiche
+     * Restituisce tutte le esperienze
      *
      * @return
      */
-    public List<Anagrafica> all() {
+    public List<Esperienza> all() {
         // Dammi tutti 
-        return em.createQuery("select e FROM Anagrafica e ORDER BY e.cognome ", Anagrafica.class)
+        return em.createQuery("select e FROM Esperienza e ORDER BY e.nome ", Esperienza.class)
                 .getResultList();
     }
     
     /**
      * per salvare nuovo record su DB
      * 
-     * @param anagrafica
+     * @param esperienza
      * @return 
      */
-    public Anagrafica create(Anagrafica anagrafica) {
-        return em.merge(anagrafica);
+    public Esperienza create(Esperienza esperienza) {
+        return em.merge(esperienza);
     }
 
     /**
      * *
      * Insert o Update su DB
      *
-     * @param anagrafica
+     * @param esperienza
      * @return
      */
-    public Anagrafica save(Anagrafica anagrafica) {
-        return em.merge(anagrafica);
+    public Esperienza save(Esperienza esperienza) {
+        return em.merge(esperienza);
     }
 
     
@@ -63,8 +62,8 @@ public class AnagraficaStore {
      * @param id
      * @return
      */
-    public Anagrafica find(int id) {
-        return em.find(Anagrafica.class, id);
+    public Esperienza find(int id) {
+        return em.find(Esperienza.class, id);
     }
 
     /**
@@ -74,7 +73,7 @@ public class AnagraficaStore {
      */
     public void remove(int id) {
         // prima si cerca per ID e poi si cancella
-        Anagrafica toremove = em.find(Anagrafica.class, id);
+        Esperienza toremove = em.find(Esperienza.class, id);
         em.remove(toremove);
     }
 

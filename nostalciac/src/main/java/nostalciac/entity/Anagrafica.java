@@ -7,12 +7,17 @@ package nostalciac.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -64,6 +69,21 @@ public class Anagrafica implements Serializable{
     @Column(name = "filefoto")
     private String filefoto;
 
+    @ManyToMany
+    // serve per spiegare come è fatta la nostra tabella "t_tags_corsi"
+    @JoinTable(
+            name = "t_anagrafiche_corsi",
+            joinColumns
+            = @JoinColumn(name = "id_anagrafica",
+                    referencedColumnName = "id_anagrafica"),
+            inverseJoinColumns
+            = @JoinColumn(name = "id_corso",
+                    referencedColumnName = "id_corso")
+    )
+    
+    private Set<Corso> corsi= new TreeSet<>();
+    
+    
     public Anagrafica() {
     }
 
@@ -169,6 +189,14 @@ public class Anagrafica implements Serializable{
 
     public void setFilefoto(String filefoto) {
         this.filefoto = filefoto;
+    }
+
+    public Set<Corso> getCorsi() {
+        return corsi;
+    }
+
+    public void setCorsi(Set<Corso> corsi) {
+        this.corsi = corsi;
     }
 
     @Override
