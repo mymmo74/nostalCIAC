@@ -6,62 +6,41 @@
 package nostalciac.services;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import nostalciac.business.AnagraficaStore;
+import nostalciac.business.SedeStore;
 import nostalciac.entity.Anagrafica;
 
 /**
  *
  * @author tss
  */
-@Path("anagrafiche/{id}")
+@Path("persona")
 public class AnagraficaResource {
 
     @Inject
-    private AnagraficaStore store;
-
-    private Integer id;
-
+    AnagraficaStore store;
+    
     @Context
     ResourceContext rc;
+     
+    private Integer id;
+
+   
 
     // Espongo il metodo di ricerca GET 
     // per ID
     // non serve più il path (perchè glielo passa SediResource) @Path("{id}")
     @GET
     public Anagrafica find() {
-        return store.find(id);
+        System.out.println("ci sono");
+        return null;
     }
 
-    // Espongo il metodo di update PUT 
-    // aggiorna su DB il record indicato con id
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void update(Anagrafica a) {
-        // se id esiste nel DB faccio un aggiornamento
-        // altrimenti lo creo nuovo
-        a.setId(id);
-        store.save(a);
-    }
-
-    // Espongo il metodo di update DELETE
-    // cancello il record indicato con id
-    @DELETE
-    public void delete() {
-        store.remove(id);
-    }
-
-    public Integer getId() {
-        return id;
-    }
+    
 
     public void setId(Integer id) {
         this.id = id;

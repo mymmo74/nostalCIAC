@@ -5,10 +5,9 @@
  */
 package nostalciac.business;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import nostalciac.entity.Anagrafica;
 
 /**
@@ -16,11 +15,9 @@ import nostalciac.entity.Anagrafica;
  * @author tss
  */
 @Stateless
-public class AnagraficaStore {
+public class AnagraficaStore implements Serializable{
     
-    @PersistenceContext
-    EntityManager em;
-    
+  
     
         
     /**
@@ -30,9 +27,7 @@ public class AnagraficaStore {
      * @return
      */
     public List<Anagrafica> all() {
-        // Dammi tutti 
-        return em.createQuery("select e FROM Anagrafica e ORDER BY e.cognome ", Anagrafica.class)
-                .getResultList();
+        return null;
     }
     
     /**
@@ -42,7 +37,7 @@ public class AnagraficaStore {
      * @return 
      */
     public Anagrafica create(Anagrafica anagrafica) {
-        return em.merge(anagrafica);
+        return null;
     }
 
     /**
@@ -53,7 +48,7 @@ public class AnagraficaStore {
      * @return
      */
     public Anagrafica save(Anagrafica anagrafica) {
-        return em.merge(anagrafica);
+        return null;
     }
 
     
@@ -64,7 +59,7 @@ public class AnagraficaStore {
      * @return
      */
     public Anagrafica find(int id) {
-        return em.find(Anagrafica.class, id);
+        return null;
     }
 
     /**
@@ -73,9 +68,7 @@ public class AnagraficaStore {
      * @param id
      */
     public void remove(int id) {
-        // prima si cerca per ID e poi si cancella
-        Anagrafica toremove = em.find(Anagrafica.class, id);
-        em.remove(toremove);
+        
     }
 
 }

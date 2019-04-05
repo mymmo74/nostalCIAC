@@ -5,6 +5,7 @@
  */
 package nostalciac.business;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,7 +22,7 @@ import nostalciac.entity.Sede;
  */
 // Indicazione che si tratta di un EJB
 @Stateless
-public class SedeStore {
+public class SedeStore implements Serializable{
     @PersistenceContext
     EntityManager em;
     
