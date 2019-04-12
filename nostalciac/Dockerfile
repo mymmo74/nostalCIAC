@@ -1,2 +1,2 @@
 FROM airhacks/glassfish
-COPY ./target/NostalCIAC.war ${DEPLOYMENT_DIR}
+COPY ./target/nostalciac.war ${DEPLOYMENT_DIR}

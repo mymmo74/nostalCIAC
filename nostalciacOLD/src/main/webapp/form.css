@@ -1,0 +1,43 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 1-apr-2019, 8.58.31
+    Author     : tss
+*/
+
+.campo label:first-child {
+    display:inline-block; 
+    width: 15%;
+}
+
+input:focus {
+    outline: solid 1px red;
+}
+
+.campo {
+    with:75%;
+    margin: auto;
+}
+
+input[type=button],input[type=submit],input[type=reset] {
+    width: 15em;
+}
+
+input[type="text"],input[type="date"], textarea , select{
+    width: 20em;
+}
+/* indico che se l'orientamento è verticale (telefonino) usa le indicazioni all'interno */
+@media (orientation:portrait){
+    .campo {
+        width: 100%;
+        text-align: center;
+    }
+    .campo label:nth-child(1)   {
+        width: 100%;
+        display:block;
+        text-align: center;
+    }
+}
